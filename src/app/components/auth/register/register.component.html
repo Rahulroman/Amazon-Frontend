@@ -1,0 +1,20 @@
+<div class="register-box">
+
+    <h2>Register</h2>
+
+    <input type="text" [(ngModel)]="User.FullName" placeholder="Full Name">
+
+    <br><br>
+
+    <input type="email"  [(ngModel)]="User.email" placeholder="Email">
+
+    <br><br>
+
+    <input type="password"  [(ngModel)]="User.Password" placeholder="Password">
+
+    <br><br>
+
+    <button (click)="onRegister()">Create Account</button>
+    <button (click)="change()" value="login">Login</button>
+
+</div>
