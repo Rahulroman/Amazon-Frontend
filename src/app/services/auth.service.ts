@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { userRegister } from '../../../app/models/authModels/authModels'
+import { userRegister } from '../models/authModels/authModels'
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 @Injectable({
