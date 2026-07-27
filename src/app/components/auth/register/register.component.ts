@@ -3,7 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { userRegister } from '../../../models/authModels/authModels'
 import {  FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../services/authService/auth.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-register',
