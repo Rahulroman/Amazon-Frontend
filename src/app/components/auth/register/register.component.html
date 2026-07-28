@@ -1,20 +1,28 @@
 <div class="register-box">
-
+<form #Register="ngForm" (ngSubmit)="onRegister()">
     <h2>Register</h2>
 
-    <input type="text" [(ngModel)]="User.FullName" placeholder="Full Name">
+    <input class="form-control" required     #FullnameField="ngModel"
+     type="text" [(ngModel)]="User.FullName" placeholder="Full Name">
+     @if(FullnameField.invalid || FullnameField.untouched){
+        <p class="text-xs text-pgc-red">Full name is required.</p>
+     }@else{
+         <p class="text-xs text-pgc-red">Full n</p>
+     }
 
     <br><br>
 
-    <input type="email"  [(ngModel)]="User.email" placeholder="Email">
+    <input type="email"   required     #emailField="ngModel" [(ngModel)]="User.email" placeholder="Email">
 
     <br><br>
 
-    <input type="password"  [(ngModel)]="User.Password" placeholder="Password">
+    <input type="password"   required     #PasswordField="ngModel" [(ngModel)]="User.Password" placeholder="Password">
 
     <br><br>
 
-    <button (click)="onRegister()">Create Account</button>
+    <!-- <button (click)="onRegister()">Create Account</button> -->
+     <button type="submit" > Register</button>
     <button (click)="change()" value="login">Login</button>
+</form>
 
 </div>
