@@ -1,0 +1,21 @@
+.auth-container{
+    display:flex;
+    height:100vh;
+}
+
+.left-panel{
+    width:50%;
+    background:#1976d2;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.right-panel{
+    width:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
