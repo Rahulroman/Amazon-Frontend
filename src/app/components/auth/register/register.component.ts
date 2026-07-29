@@ -22,7 +22,8 @@ export class RegisterComponent {
   User: userRegister = {
     FullName: '',
     email: '',
-    Password: ''
+    Password: '',
+    MobileNo : 0
   };
 
   onRegister() {

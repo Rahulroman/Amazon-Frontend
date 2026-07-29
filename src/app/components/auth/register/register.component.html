@@ -4,16 +4,23 @@
        <div class="form-group" >
             <input class="form-control"
                 type="text"
+                pInputText
                 name="FullName"
                 required
                 [(ngModel)]="User.FullName"
                 #FullNameField="ngModel"
-            />
-           @if(FullNameField.invalid  &&  (fullNameField.touched || fullNameField.dirty) )
+            >
+           @if(FullNameField.invalid  &&  (FullNameField.touched || FullNameField.dirty) )
            {
                 <small class="error">Full Name is required.</small>
            }
-       </div>>
+
+
+
+
+
+
+       </div>
 
        
         <button type="submit"> Register</button>
