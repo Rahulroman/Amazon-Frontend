@@ -8,8 +8,9 @@ export const routes: Routes = [
     {
         path: 'auth', component : AuthLayoutComponent,
         children: [
+            
             {
-                path: 'register',
+            path: ('register') ,
                 loadComponent: () => import("../app/components/auth/register/register.component").then(m => m.RegisterComponent)
             },
              {
@@ -25,6 +26,17 @@ export const routes: Routes = [
             {
                 path : '', loadComponent : () => import('../app/components/dashboard/dashboard/dashboard.component').then(m => m.DashboardComponent)
             }
+        ]
+    },
+
+
+    {
+        path: '', component : AuthLayoutComponent,
+        children: [
+            {
+                path : '' ,
+                 loadComponent: () => import("../app/components/auth/register/register.component").then(m => m.RegisterComponent)
+            },
         ]
     }
 ];

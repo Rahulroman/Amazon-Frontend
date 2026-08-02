@@ -1,7 +1,11 @@
 export interface userRegister  {
 
     FullName : string,
-    email : string,
+    Email : string,
     Password : string,
-    MobileNo : number
+    MobileNo : number,
+    ProfileImg : File  | null,
+    Hobbies : string[],
+    Gender : string,
+    Role : string[]
 }

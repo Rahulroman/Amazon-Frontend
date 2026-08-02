@@ -1,30 +1,12 @@
-<div class="register-box">
-    <form #Register="ngForm" (ngSubmit)="onRegister()">
-        <h2>Register</h2>
-       <div class="form-group" >
-            <input class="form-control"
-                type="text"
-                pInputText
-                name="FullName"
-                required
-                [(ngModel)]="User.FullName"
-                #FullNameField="ngModel"
-            >
-           @if(FullNameField.invalid  &&  (FullNameField.touched || FullNameField.dirty) )
-           {
-                <small class="error">Full Name is required.</small>
-           }
+<div class="cart">
 
-
-
-
-
-
-       </div>
-
-       
-        <button type="submit"> Register</button>
-        <button (click)="change()" value="login">Login</button>
+    <form #FormRegister="ngForm" (submit)="onSubmit(FormRegister)">
+        <div class="field form-control">
+            <label>Full Name</label>
+            <input pInputText type="text" [(ngModel)]="User.FullName" #FullName="ngModel">
+          @if( FullName.invalid ){
+             <small style="color: red;">Full Name is required</small>
+          }
+        </div>
     </form>
-
 </div>
