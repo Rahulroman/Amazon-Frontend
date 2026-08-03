@@ -5,12 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { ApiServiceService } from '../../../services/api.service';
-import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, CommonModule, InputTextModule],
+  imports: [FormsModule, CommonModule,ButtonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
@@ -48,7 +49,9 @@ export class RegisterComponent {
   ];
 
 
-onSubmit(from : any){
+onSubmit(form : any){
+
+  console.log(this.form.value);
 
 
 }
