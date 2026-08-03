@@ -1,12 +1,82 @@
 <div class="cart">
+    <div class="card p-4 shadow-3">
+        <h2 class="text-center mb-4">User Registration</h2>
 
-    <form #FormRegister="ngForm" (submit)="onSubmit(FormRegister)">
-        <div class="field form-control">
-            <label>Full Name</label>
-            <input pInputText type="text" [(ngModel)]="User.FullName" #FullName="ngModel">
-          @if( FullName.invalid ){
-             <small style="color: red;">Full Name is required</small>
-          }
-        </div>
-    </form>
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+            <div class="form-control">
+                <label>Full Name : </label>
+                <input type="text" [(ngModel)]="User.FullName" name="FullName" #FullName="ngModel" required>
+                @if(FullName.invalid && FullName.touched ){
+                <span style="color:red;"> Full Name Required </span>
+                }
+            </div>
+            <div class="form-control">
+                <label>Email : </label>
+                <input type="email" [(ngModel)]="User.Email" name="Email" #Email="ngModel" required>
+                @if(Email.invalid && Email.touched ){
+                <span style="color:red;"> Email Required </span>
+                }
+            </div>
+            <div class="form-control">
+                <label>Password : </label>
+                <input type="password" [(ngModel)]="User.Password" name="Password" #Password="ngModel" required>
+                @if(Password.invalid && Password.touched ){
+                <span style="color:red;"> Password Required </span>
+                }
+            </div>
+            <div class="form-control">
+                <label>MobileNo : </label>
+                <input type="number" [(ngModel)]="User.MobileNo" name="MobileNo" #MobileNo="ngModel" required>
+                @if(MobileNo.invalid && MobileNo.touched ){
+                <span style="color:red;"> MobileNo Required </span>
+                }
+            </div>
+            <div class="form-control">
+                <label>Profile Img : </label>
+                <input type="file" [(ngModel)]="User.ProfileImg" name="ProfileImg" #ProfileImg="ngModel">
+            </div>
+            <div class="form-control">
+                <label>Hobbies : </label>
+
+                @for (hobby of hobbies; track hobby.value)
+                {
+                <label style="margin-right:15px;">
+                    <input type="checkbox" value="hobby.value" name="hobby.value" />
+                    {{hobby.label}}
+                </label>
+
+                }
+            </div>
+
+            <div class="form-control">
+                <label>Gender : </label>
+                Male<input type="radio" value="Male" name="Gender" />
+                Female<input type="radio" value="Female" name="Gender" />
+
+            </div>
+
+            <div class="form-control">
+                <label>Roles</label>
+                <select >
+                    <option value="">-- Select --</option>
+                    @for(role of roles; track  role.value)
+                    {
+                    <option value="role.value"> {{role.label}} </option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" >Submit</button>
+
+             @if (registerForm.submitted) {
+
+            <h3>Submitted Data</h3>
+
+            <pre>{{ User | json }}</pre>
+
+        }
+
+        </form>
+
+    </div>
 </div>
