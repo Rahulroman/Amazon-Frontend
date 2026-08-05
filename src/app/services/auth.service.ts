@@ -2,24 +2,25 @@ import { Injectable } from '@angular/core';
 import { userRegister } from '../models/authModels/authModels'
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment'
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  apiUrl = environment.apiUrl;
+
+
   constructor(private http : HttpClient) { }
 
 
 
-  onRegister(User : userRegister) : Observable<any> {
-    alert("Service Called : " + JSON.stringify(  User));
+ 
+  Registeruser(userRegister : any) : Observable<any> {
 
-   return  this.http.post("frtertr" , User).pipe(
-      // tap(response => {
-      //   localStorage.setItem('token', response.toString());
-        
-      // })
-    );
+    return this.http.post<userRegister>(`${this.apiUrl}/Register` , userRegister );
+
   }
 
 

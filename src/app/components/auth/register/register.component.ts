@@ -74,27 +74,17 @@ export class RegisterComponent {
 
 onSubmit(form: NgForm) {
 
-    console.log('Form Object :', form);
+    this.authService.Registeruser(form.value).subscribe({
+        next : (res) => {
 
-    console.log('Form Value :', form.value);
+          alert(res.body)
 
-    console.log('Full Name :', form.value.FullName);
-
-    console.log('Email :', form.value.Email);
-
-    console.log('Password :', form.value.Password);
-
-    console.log('Mobile No :', form.value.MobileNo);
-
-    console.log('Gender :', form.value.Gender);
-
-    console.log('Role :', form.value.Role);
-
-    console.log('Hobbies :', this.User.Hobbies);
-
-    console.log('Profile Image :', this.User.ProfileImg);
-
-    console.log('Complete User Object :', this.User);
+        },
+        error : (res) => {
+          alert("error")
+        }
+    });
+  
 
   }
 
