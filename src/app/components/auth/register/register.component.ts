@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { userRegister } from '../../../models/authModels/authModels'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { ApiServiceService } from '../../../services/api.service';
@@ -49,12 +49,54 @@ export class RegisterComponent {
   ];
 
 
-onSubmit(form : any){
+  onHobbyChange(event: any) {
 
-  console.log(this.form.value);
+    const hobby = event.target.value;
+
+    if (event.target.checked) {
+      this.User.Hobbies.push(hobby);
+    } else 
+      {
+      this.User.Hobbies = this.User.Hobbies.filter(x => x !== hobby);
+    }
+
+  }
 
 
-}
+  OnFileSelect(event : any){
+
+    if (event.target.files.length > 0) {
+      this.User.ProfileImg = event.target.files[0];
+    }
+
+  }
+
+
+onSubmit(form: NgForm) {
+
+    console.log('Form Object :', form);
+
+    console.log('Form Value :', form.value);
+
+    console.log('Full Name :', form.value.FullName);
+
+    console.log('Email :', form.value.Email);
+
+    console.log('Password :', form.value.Password);
+
+    console.log('Mobile No :', form.value.MobileNo);
+
+    console.log('Gender :', form.value.Gender);
+
+    console.log('Role :', form.value.Role);
+
+    console.log('Hobbies :', this.User.Hobbies);
+
+    console.log('Profile Image :', this.User.ProfileImg);
+
+    console.log('Complete User Object :', this.User);
+
+  }
 
 
   change() {
