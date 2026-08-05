@@ -33,48 +33,49 @@
             </div>
             <div class="form-control">
                 <label>Profile Img : </label>
-                <input type="file" [(ngModel)]="User.ProfileImg" name="ProfileImg" #ProfileImg="ngModel">
+                <input type="file" [(ngModel)]="User.ProfileImg" 
+                (change)="OnFileSelect($event)"
+                name="ProfileImg" #ProfileImg="ngModel">
             </div>
-            <div class="form-control">
-                <label>Hobbies : </label>
 
-                @for (hobby of hobbies; track hobby.value)
-                {
+            <div>
+                <label>Hobbies</label><br>
+                @for (hobby of hobbies; track hobby.value) {
                 <label style="margin-right:15px;">
-                    <input type="checkbox" value="hobby.value" name="hobby.value" />
-                    {{hobby.label}}
+                    <input type="checkbox" [value]="hobby.value"
+                        (change)="onHobbyChange($event)">
+                    {{ hobby.label }}
                 </label>
-
                 }
             </div>
 
             <div class="form-control">
                 <label>Gender : </label>
-                Male<input type="radio" value="Male" name="Gender" />
-                Female<input type="radio" value="Female" name="Gender" />
+                Male<input type="radio" value="Male" [(ngModel)]="User.Gender" name="Gender" />
+                Female<input type="radio" value="Female" [(ngModel)]="User.Gender" name="Gender" />
 
             </div>
 
             <div class="form-control">
                 <label>Roles</label>
-                <select >
+                <select [(ngModel)]="User.Role" name="Role">
                     <option value="">-- Select --</option>
-                    @for(role of roles; track  role.value)
+                    @for(role of roles; track role.value)
                     {
-                    <option value="role.value"> {{role.label}} </option>
+                    <option [value]="role.value"> {{role.label}} </option>
                     }
                 </select>
             </div>
 
-            <button type="submit" >Submit</button>
+            <button type="submit">Submit</button>
 
-             @if (registerForm.submitted) {
+            @if (registerForm.submitted) {
 
             <h3>Submitted Data</h3>
 
             <pre>{{ User | json }}</pre>
 
-        }
+            }
 
         </form>
 
