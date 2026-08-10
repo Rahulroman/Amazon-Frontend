@@ -62,7 +62,6 @@ export class RegisterComponent {
 
   }
 
-
   OnFileSelect(event : any){
 
     if (event.target.files.length > 0) {
@@ -71,22 +70,6 @@ export class RegisterComponent {
 
   }
 
-
-onSubmit(form: NgForm) {
-
-    this.authService.Registeruser(form.value).subscribe({
-        next : (res) => {
-
-          alert(res.body)
-
-        },
-        error : (res) => {
-          alert("error")
-        }
-    });
-  
-
-  }
 
 
   change() {

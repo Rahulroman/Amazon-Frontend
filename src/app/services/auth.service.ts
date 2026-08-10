@@ -12,16 +12,16 @@ export class AuthService {
   apiUrl = environment.apiUrl;
 
 
+
   constructor(private http : HttpClient) { }
 
 
 
- 
   Registeruser(userRegister : any) : Observable<any> {
 
     return this.http.post<userRegister>(`${this.apiUrl}/Register` , userRegister );
 
-  }
+
 
 
 
