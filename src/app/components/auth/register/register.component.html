@@ -1,4 +1,6 @@
-<div class="cart">
+<!-- <div class="cart"> 
+
+
     <div class="card p-4 shadow-3">
         <h2 class="text-center mb-4">User Registration</h2>
 
@@ -80,4 +82,71 @@
         </form>
 
     </div>
-</div>
+</div> -->
+
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <div>
+        <label>Full Name</label>
+        <input type="text" formControlName="FullName">
+        @if(registerForm.get('FullName')?.invalid && registerForm.get('FullName')?.touched){
+        @if (registerForm.get('FullName')?.errors?.['required']) {
+        <small style="color: red;"> Full Name is Required</small>
+        }
+        @if(registerForm.get("FullName")?.errors?.["minlength"]){
+        <small style="color: red;"> Min length 3 </small>
+        }
+
+        }
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="email" formControlName="Email">
+    </div>
+    <div>
+        <label>Password</label>
+        <input type="Password" formControlName="Password">
+    </div>
+    <div>
+        <label>Mobile Number</label>
+        <input type="test" formControlName="MobileNo">
+    </div>
+
+
+    <div>
+        <label for="profileImage">Profile Image</label> <br>
+        <input type="file" id="profileImage" (change)="OnFileSelect($event)">
+    </div>
+    <div>
+        <label>Hobbies</label>
+        @for (hobby of hobbies; track hobby.value){
+        <input type="checkbox" [value]="hobby.value" (change)="onHobbyChange($event)"> {{hobby.label}}
+        }
+    </div>
+    <div>
+        <label>Gender</label>
+        <label>
+            <input type="radio" value="Male" formControlName="Gender"> Male
+        </label>
+
+        <label>
+            <input type="radio" value="Female" formControlName="Gender"> Female
+        </label>
+    </div>
+    <div>
+        <label>Role</label>
+
+        <select formControlName="Role">
+            <option value="">--select--</option>
+
+            @for (role of roles; track role.value) {
+            <option [value]="role.value">
+                {{ role.label }}
+            </option>
+            }
+        </select>
+    </div>
+<button type="submit">submit</button>
+
+</form>

@@ -1,84 +1,144 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { userRegister } from '../../../models/authModels/authModels'
-import { FormsModule, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { userRegister } from '../../../models/authModels/authModels';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
-import { ApiServiceService } from '../../../services/api.service';
 import { ButtonModule } from 'primeng/button';
-
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, CommonModule,ButtonModule],
+  imports: [
+    FormsModule,
+    CommonModule,
+    ButtonModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
 
+  private fb = inject(FormBuilder);
   private route = inject(Router);
   private authService = inject(AuthService);
-  private apiService = inject(ApiServiceService)
 
+  private selectedFile: File | null = null;
 
-  User : userRegister =  {
-    FullName : '',
-    Email : '',
-    Password : '',
-    MobileNo : 0,
-    ProfileImg : null,
-    Hobbies : [],
-    Gender : '',
-    Role : []
-
+  User: userRegister = {
+    FullName: '',
+    Email: '',
+    Password: '',
+    MobileNo: 0,
+    ProfileImg: null,
+    Hobbies: [],
+    Gender: '',
+    Role: []
   };
 
- hobbies = [
+  hobbies = [
     { label: 'Cricket', value: 'Cricket' },
     { label: 'Football', value: 'Football' },
     { label: 'Music', value: 'Music' },
-    { label: 'Travel', value: 'Travel' }
+    { label: 'Travel', value: 'Travel' },
   ];
 
-   roles = [
+  roles = [
     { label: 'Admin', value: 'Admin' },
     { label: 'Manager', value: 'Manager' },
     { label: 'Employee', value: 'Employee' },
-    { label: 'HR', value: 'HR' }
+    { label: 'HR', value: 'HR' },
   ];
 
+  registerForm = this.fb.group({
+    FullName: ['', [Validators.required, Validators.minLength(3)]],
+    Email: ['', [Validators.required, Validators.email]],
+    Password: ['', [Validators.required, Validators.minLength(4)]],
+    MobileNo: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+    ProfileImg: [null as File | null],
+    Hobbies: [[] as string[]],
+    Gender: ['' as string, Validators.required],
+    Role: ['' as string, Validators.required],
+  });
 
-  onHobbyChange(event: any) {
+  onHobbyChange(event: Event): void {
 
-    const hobby = event.target.value;
+    const input = event.target as HTMLInputElement;
+    const hobby = input.value;
 
-    if (event.target.checked) {
-      this.User.Hobbies.push(hobby);
-    } else 
-      {
-      this.User.Hobbies = this.User.Hobbies.filter(x => x !== hobby);
+    const hobbies = this.registerForm.get('Hobbies')?.value ?? [];
+
+    if (input.checked) {
+      this.registerForm.patchValue({
+        Hobbies: [...hobbies, hobby]
+      });
+    } else {
+      this.registerForm.patchValue({
+        Hobbies: hobbies.filter(x => x !== hobby)
+      });
+    }
+  }
+
+  OnFileSelect(event: Event): void {
+
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+
+      this.selectedFile = input.files[0];
+
+      this.registerForm.patchValue({
+        ProfileImg: this.selectedFile
+      });
+    }
+  }
+
+  change(): void {
+    this.route.navigate(['auth/login']);
+  }
+
+  onSubmit(): void {
+
+  
+
+    const formValue = this.registerForm.getRawValue();
+
+    const formData = new FormData();
+
+    formData.append('FullName', formValue.FullName ?? '');
+    formData.append('Email', formValue.Email ?? '');
+    formData.append('Password', formValue.Password ?? '');
+    formData.append('MobileNo', formValue.MobileNo ?? '');
+    formData.append('Gender', formValue.Gender ?? '');
+    formData.append('Role', formValue.Role ?? '');
+
+    formValue.Hobbies!.forEach(hobby => {
+      formData.append('Hobbies', hobby);
+    });
+
+    if (formValue.ProfileImg) {
+      formData.append(
+        'ProfileImg',
+        formValue.ProfileImg,
+        formValue.ProfileImg.name
+      );
     }
 
+    this.authService.Registeruser(formData).subscribe({
+      next: (res) => {
+        console.log('Registration Success', res);
+        this.registerForm.reset();
+        this.selectedFile = null;
+      },
+      error: (err) => {
+        console.error('Registration Error', err);
+      }
+    });
   }
-
-  OnFileSelect(event : any){
-
-    if (event.target.files.length > 0) {
-      this.User.ProfileImg = event.target.files[0];
-    }
-
-  }
-
-
-
-  change() {
-    this.route.navigate(["auth/login"]);
-  }
-
-
-
-
-
-
 }
